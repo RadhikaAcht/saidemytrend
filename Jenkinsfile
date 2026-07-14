@@ -47,7 +47,7 @@ pipeline {
                           "files": [
                             {
                               "pattern": "target/(*.jar)",
-                              "target": "radhu_maven/{1}",
+                              "target": "radhu_maven-libs-snapshot-local/{1}",
                               "flat": "false",
                               "props": "${properties}",
                               "exclusions": [ "*.sha1", "*.md5"]
