@@ -24,6 +24,11 @@ pipeline {
                 sh 'mvn surefire-report:report'
                 echo "----------- unit test completed ----------"
             }
+            post {
+                always {
+                    junit testResults: 'target/surefire-reports/*.xml', allowEmptyResults: true
+                }
+            }
         }
 
         stage('SonarQube analysis') {
@@ -47,7 +52,7 @@ pipeline {
                           "files": [
                             {
                               "pattern": "target/(*.jar)",
-                              "target": "radhu_maven-libs-snapshot-local/{1}",
+                              "target": "radhu_maven-libs-release-local/{1}",
                               "flat": "false",
                               "props": "${properties}",
                               "exclusions": [ "*.sha1", "*.md5"]
