@@ -9,8 +9,28 @@ pipeline {
         stage("build") {
             steps {
                 echo "----------- build started ----------"
-                sh 'mvn clean deploy'
+                sh 'mvn clean compile'
                 echo "----------- build completed ----------"
+            }
+        }
+
+        stage("test") {
+            steps {
+                echo "----------- running tests ----------"
+                sh 'mvn test'
+            }
+            post {
+                always {
+                    junit testResults: 'target/surefire-reports/*.xml', allowEmptyResults: true
+                }
+            }
+        }
+
+        stage("package & deploy") {
+            steps {
+                echo "----------- packaging & deploying ----------"
+                sh 'mvn package deploy -DskipTests'
+                echo "----------- deploy completed ----------"
             }
         }
 
