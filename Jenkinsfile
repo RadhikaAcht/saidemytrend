@@ -15,10 +15,10 @@ pipeline {
         }
 
         stage('SonarQube analysis') {
-            environment {
-                scannerHome = tool 'radhu-sonarcubescanner'
-            }
             steps {
+                script {
+                    scannerHome = tool 'radhu-sonarcubescanner'
+                }
                 withSonarQubeEnv('radhu_sonarcube') {
                     sh "${scannerHome}/bin/sonar-scanner"
                 }
